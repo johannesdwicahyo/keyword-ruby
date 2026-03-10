@@ -12,25 +12,25 @@
 ## v0.1.1 — Algorithm Fixes & Edge Cases
 
 ### Fix
-- [ ] **RAKE co-occurrence degree calculation** — Current implementation counts `words.length - 1` as degree for all words in a phrase; should use actual co-occurrence matrix where `degree(w) = sum of all words co-occurring with w`
-- [ ] **TF-IDF without corpus** — `Math.log(@doc_count + 1)` when `@doc_count` is 0 yields `Math.log(1) = 0`, making all scores 0; use raw term frequency when no corpus is fitted
-- [ ] **YAKE candidate generation bug** — Middle stop words allowed in multi-word candidates; filter phrases containing stop words in middle positions
-- [ ] **Tokenizer contraction handling** — "don't" splits into "don", "t"; preserve contractions and hyphenated words
-- [ ] **Empty result on single stop word** — `extract("the")` should return `[]` not crash
+- [x] **RAKE co-occurrence degree calculation** — Current implementation counts `words.length - 1` as degree for all words in a phrase; should use actual co-occurrence matrix where `degree(w) = sum of all words co-occurring with w`
+- [x] **TF-IDF without corpus** — `Math.log(@doc_count + 1)` when `@doc_count` is 0 yields `Math.log(1) = 0`, making all scores 0; use raw term frequency when no corpus is fitted
+- [x] **YAKE candidate generation bug** — Middle stop words allowed in multi-word candidates; filter phrases containing stop words in middle positions
+- [x] **Tokenizer contraction handling** — "don't" splits into "don", "t"; preserve contractions and hyphenated words
+- [x] **Empty result on single stop word** — `extract("the")` should return `[]` not crash
 
 ### Add
-- [ ] Input validation: nil text, non-string input, max text length
-- [ ] **Keyword deduplication** — RAKE can produce overlapping phrases ("machine learning" and "learning algorithms"); merge overlapping candidates
-- [ ] **Keyword position tracking** — Record first occurrence position in text for each keyword
-- [ ] **Score normalization** — Normalize scores to 0.0..1.0 range across all algorithms for comparability
+- [x] Input validation: nil text, non-string input, max text length
+- [x] **Keyword deduplication** — RAKE can produce overlapping phrases ("machine learning" and "learning algorithms"); merge overlapping candidates
+- [x] **Keyword position tracking** — Record first occurrence position in text for each keyword
+- [x] **Score normalization** — Normalize scores to 0.0..1.0 range across all algorithms for comparability
 
 ### Test
-- [ ] RAKE mathematical correctness (hand-computed expected scores)
-- [ ] TF-IDF with and without corpus
-- [ ] Single-word documents, stop-words-only documents
-- [ ] Very long documents (>10K words) — performance
-- [ ] Unicode text (accented characters, CJK)
-- [ ] Invalid algorithm name raises proper error
+- [x] RAKE mathematical correctness (hand-computed expected scores)
+- [x] TF-IDF with and without corpus
+- [x] Single-word documents, stop-words-only documents
+- [x] Very long documents (>10K words) — performance
+- [x] Unicode text (accented characters, CJK)
+- [x] Invalid algorithm name raises proper error
 
 ---
 
