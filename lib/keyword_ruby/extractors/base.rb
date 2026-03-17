@@ -3,7 +3,7 @@
 module KeywordRuby
   module Extractors
     class Base
-      SUPPORTED_LANGUAGES = %i[en id].freeze
+      SUPPORTED_LANGUAGES = %i[en id ms nl fr de es pt ar ja].freeze
 
       def initialize(language: nil, top_n: nil, max_length: nil, min_word_length: nil, normalize: true)
         config = KeywordRuby.configuration
