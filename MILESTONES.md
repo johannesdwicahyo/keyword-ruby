@@ -1,110 +1,63 @@
-# keyword-ruby Milestones
+# keyword-ruby — Milestones
 
-## Current State (v0.1.0)
+> **Source of truth:** https://github.com/johannesdwicahyo/keyword-ruby/milestones
+> **Last synced:** 2026-04-14
 
-- RAKE, YAKE, TF-IDF keyword extraction algorithms
-- English and Indonesian stop word lists
-- Module-level `extract`/`extract_batch` API
-- 13 tests, 21 assertions — all passing
+This file mirrors the GitHub milestones for this repo. Edit the milestone or issues on GitHub and re-sync, do not hand-edit.
 
----
+## v1.0.0 (**open**)
 
-## v0.1.1 — Algorithm Fixes & Edge Cases
+_Production ready: API stability guarantee, comprehensive documentation with algorithm explanations, performance benchmarks, accuracy benchmarks against standard datasets_
 
-### Fix
-- [x] **RAKE co-occurrence degree calculation** — Current implementation counts `words.length - 1` as degree for all words in a phrase; should use actual co-occurrence matrix where `degree(w) = sum of all words co-occurring with w`
-- [x] **TF-IDF without corpus** — `Math.log(@doc_count + 1)` when `@doc_count` is 0 yields `Math.log(1) = 0`, making all scores 0; use raw term frequency when no corpus is fitted
-- [x] **YAKE candidate generation bug** — Middle stop words allowed in multi-word candidates; filter phrases containing stop words in middle positions
-- [x] **Tokenizer contraction handling** — "don't" splits into "don", "t"; preserve contractions and hyphenated words
-- [x] **Empty result on single stop word** — `extract("the")` should return `[]` not crash
+- [ ] #28 API stability guarantee
+- [ ] #29 Comprehensive documentation with algorithm explanations
+- [ ] #30 Performance benchmarks (keywords/sec per algorithm)
+- [ ] #31 Accuracy benchmarks against standard datasets
 
-### Add
-- [x] Input validation: nil text, non-string input, max text length
-- [x] **Keyword deduplication** — RAKE can produce overlapping phrases ("machine learning" and "learning algorithms"); merge overlapping candidates
-- [x] **Keyword position tracking** — Record first occurrence position in text for each keyword
-- [x] **Score normalization** — Normalize scores to 0.0..1.0 range across all algorithms for comparability
+## v0.4.0 (**open**)
 
-### Test
-- [x] RAKE mathematical correctness (hand-computed expected scores)
-- [x] TF-IDF with and without corpus
-- [x] Single-word documents, stop-words-only documents
-- [x] Very long documents (>10K words) — performance
-- [x] Unicode text (accented characters, CJK)
-- [x] Invalid algorithm name raises proper error
+_Advanced features: POS-based filtering, named entity keywords, corpus management, export formats, algorithm benchmarks, memory-efficient processing, thread-safe extractors_
 
----
+- [ ] #21 Add POS-based keyword filtering
+- [ ] #22 Add named entity keyword boosting via ner-ruby
+- [ ] #23 Add persistent TF-IDF corpus management
+- [ ] #24 Add export formats (JSON, CSV, word cloud)
+- [ ] #25 Algorithm benchmarks against standard datasets
+- [ ] #26 Memory-efficient processing for large documents
+- [ ] #27 Thread-safe extractors
 
-## v0.2.0 — YAKE Improvements & Batch Processing
+## v0.3.0 (**open**)
 
-### Add: Algorithms
-- [ ] **TextRank** — Graph-based keyword extraction (PageRank on word co-occurrence graph)
-- [ ] **YAKE improvements** — Proper statistical features (casing, word position, word frequency, relatedness to context, word different sentence)
+_Ecosystem integration: sastrawi-ruby stemmed extraction, rag-ruby BM25 hybrid search, eval-ruby keyword overlap metric, guardrails-ruby topic detection, keyphrase expansion_
 
-### Add: Languages
-- [ ] Stop words for: Malay (MS), Dutch (NL), French (FR), German (DE), Spanish (ES), Portuguese (PT), Arabic (AR), Japanese (JA)
-- [ ] **Auto-language detection** — Optional lingua-ruby integration: `extract(text, language: :auto)`
+- [ ] #15 sastrawi-ruby: Stemmed keyword extraction for Indonesian
+- [ ] #16 rag-ruby: BM25 hybrid search with keywords
+- [ ] #17 eval-ruby: Keyword overlap metric
+- [ ] #18 guardrails-ruby: Topic detection via keyword matching
+- [ ] #19 Add keyphrase expansion
+- [ ] #20 Add keyword importance tracking over time
 
-### Add: Features
-- [ ] **Batch extraction with shared state** — `extract_batch` reuses stop word loading and vocabulary
-- [ ] **Keyword clustering** — Group related keywords by semantic similarity
-- [ ] **N-gram extraction** — Character-level n-grams for CJK text support
-- [ ] **Domain stop words** — `KeywordRuby.configure { |c| c.custom_stop_words = ["specific", "domain", "terms"] }`
+## v0.2.0 (**closed**)
 
-### Refine
-- [ ] Remove unused `SentenceSplitter` class or integrate it into tokenizer
-- [ ] Stop word loading should raise error if language file explicitly requested but missing
+_YAKE improvements & batch processing: TextRank algorithm, YAKE statistical features, 8 new language stop words, auto-language detection, batch extraction, keyword clustering, N-gram extraction, domain stop words_
 
-### Test
-- [ ] Cross-algorithm comparison (same text, different algorithms)
-- [ ] Multi-language extraction
-- [ ] Batch performance benchmarks
-- [ ] Memory usage for large corpora (TF-IDF)
+- [x] #1 Add TextRank algorithm
+- [x] #2 Improve YAKE with proper statistical features
+- [x] #3 Add stop words for 8 new languages
+- [x] #4 Add auto-language detection via lingua-ruby
+- [x] #5 Batch extraction with shared state
+- [x] #6 Add keyword clustering by semantic similarity
+- [x] #7 Add character-level N-gram extraction for CJK
+- [x] #8 Add domain-specific custom stop words
+- [x] #9 Remove unused SentenceSplitter or integrate into tokenizer
+- [x] #10 Error on missing requested language stop word file
+- [x] #11 Tests for cross-algorithm comparison
+- [x] #12 Tests for multi-language extraction
+- [x] #13 Batch performance benchmarks
+- [x] #14 Test memory usage for large TF-IDF corpora
 
----
+## v0.1.1 (**closed**)
 
-## v0.3.0 — sastrawi-ruby Integration & Hybrid Search
+_Algorithm fixes & edge cases: RAKE co-occurrence fix, TF-IDF without corpus fix, YAKE candidate generation fix, tokenizer contraction handling, input validation, keyword deduplication, position tracking, score normalization_
 
-### Integrate: sastrawi-ruby
-- [ ] **Stemmed keyword extraction** — Apply Indonesian stemming before RAKE/YAKE for better grouping
-- [ ] `extract(text, language: :id, stemmer: :sastrawi)` option
-
-### Integrate: rag-ruby
-- [ ] **BM25 hybrid search** — Provide keywords for BM25 scoring alongside vector similarity
-- [ ] **Auto-tagging** — Extract keywords during document ingestion for metadata enrichment
-- [ ] `RagRuby::Pipeline.configure { |c| c.keyword_extractor = KeywordRuby::Extractors::Rake.new }`
-
-### Integrate: eval-ruby
-- [ ] **Keyword overlap metric** — Lightweight relevance metric: `keyword_overlap(expected, actual)`
-- [ ] Compare generated answer keywords vs reference answer keywords
-
-### Integrate: guardrails-ruby
-- [ ] **Topic detection** — Extract keywords → match against blocked topic lists
-- [ ] `GuardrailsRuby::Checks::TopicCheck.new(blocked_topics: ["weapons", "drugs"])`
-
-### Add
-- [ ] **Keyphrase expansion** — Expand single keywords to meaningful phrases using context window
-- [ ] **Keyword importance over time** — Track keyword frequency across document collections
-
----
-
-## v0.4.0 — Advanced Features
-
-### Add
-- [ ] **POS-based filtering** — Only extract nouns/noun phrases (requires POS tagger integration)
-- [ ] **Named entity keywords** — Combine with ner-ruby to boost entity keywords
-- [ ] **Corpus management** — Persistent TF-IDF corpus with add/remove/update documents
-- [ ] **Export formats** — `to_json`, `to_csv`, `to_word_cloud` for visualization
-
-### Refine
-- [ ] Algorithm benchmarks against standard datasets (SemEval, Inspec, Krapivin)
-- [ ] Memory-efficient processing for documents >1MB
-- [ ] Thread-safe extractors
-
----
-
-## v1.0.0 — Production Ready
-
-- [ ] API stability guarantee
-- [ ] Comprehensive documentation with algorithm explanations
-- [ ] Performance benchmarks (keywords/sec for each algorithm)
-- [ ] Accuracy benchmarks against standard datasets
+_No issues._ (0 open, 0 closed reported)
